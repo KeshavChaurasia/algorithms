@@ -18,10 +18,9 @@ class ArrayStack{
 
    public:
    ArrayStack(int capacity);
-   ~ArrayStack();
    int size();
    bool empty();
-   T& top();
+   T top();
    void push(T elem);
    void pop();
 };
@@ -31,10 +30,6 @@ ArrayStack<T>::ArrayStack(int capacity){
    this->stackArray = new T[capacity];
    this->capacity = capacity;
    this->topIndex = -1;
-}
-template <typename T>
-ArrayStack<T>:: ~ArrayStack(){
-   delete this->stackArray;
 }
 
 template <typename T>
@@ -48,7 +43,7 @@ bool ArrayStack<T>::empty(){
 }
 
 template <typename T>
-T& ArrayStack<T>::top(){
+T ArrayStack<T>::top(){
    if(this->empty()) throw "Top of empty stack";
    return this->stackArray[topIndex];
 }
@@ -75,5 +70,9 @@ int main(){
    stack.pop();
    stack.push(10);
    cout << stack.top() << endl;
+   ArrayStack<string> s(2);
+   s.push("Keshav");
+   s.push("Simran");
+   cout << s.top() << endl;
    return EXIT_SUCCESS;
 }
