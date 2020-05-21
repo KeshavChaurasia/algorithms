@@ -37,11 +37,10 @@ class SinglyLinkedList {
     void removeBack();
     void removeAt(int index);
     // peak
-    int peakHead();
-    int peakTail();
+    int peakBack();
+    int peakFront();
     // search
     bool contains(int data);
-    int getIndex(int data);
     void printLinkedList(); 
 };
 SinglyLinkedList::SinglyLinkedList():head(NULL){}
@@ -161,6 +160,34 @@ void SinglyLinkedList::printLinkedList(){
 	s = s + " NULL";
 	cout << s << endl;
 }
+int SinglyLinkedList::peakFront(){
+	if(!isEmpty()){
+		return head->data;
+	}
+	return -1;
+}
+int SinglyLinkedList::peakBack(){
+	if(isEmpty())
+		return -1;
+	ListNode* iterator = head;
+	while(iterator->next != NULL){
+		iterator = iterator->next;
+	}
+	return iterator->data;
+}
+bool SinglyLinkedList::contains(int data){
+	if(isEmpty())
+		return false;
+	ListNode* iterator = head;
+	while(iterator != NULL){
+		if(iterator->data == data){
+			return true;
+		}
+		iterator = iterator->next;
+	}
+	return false;
+}
+
 int main(){
 	SinglyLinkedList list;
 	list.insertFront(1);
@@ -180,5 +207,8 @@ int main(){
 	list.printLinkedList();
 	list.removeAt(1);
 	list.printLinkedList();
+	cout << list.peakFront() << endl;
+	cout << list.peakBack() << endl;
+	cout << list.contains(0) << endl;
 	return EXIT_SUCCESS;
 }
