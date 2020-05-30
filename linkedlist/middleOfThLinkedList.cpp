@@ -11,7 +11,7 @@ class ListNode {
 		}
 };
 
-int middleOfTheLinkedList(ListNode* head){
+int middleOfTheLinkedListUsingHash(ListNode* head){
 	// HEAD 1 --> 2 --> 3 NULL
 	// HEAD 1 --> 2 --> 3 --> 4 NULL
 	unordered_map<int,int> table;
@@ -25,6 +25,19 @@ int middleOfTheLinkedList(ListNode* head){
 	return table[counter/2];
 }
 
+int middleOfTheLinkedListUsingTwoPointers(ListNode* head){
+	// HEAD 1 --> 2 --> 3 --> 4 NULL
+	// HEAD 1 --> 2 --> 3 --> 4 --> 5 --> 6 --> 7 NULL
+	ListNode* fastPointer = head;
+	ListNode* slowPointer = head;
+	while(fastPointer != NULL && slowPointer != NULL && fastPointer->next != NULL){
+		slowPointer = slowPointer->next;
+		fastPointer = fastPointer->next->next;
+	}
+	return slowPointer->data;
+
+}
+
 int main(){
 	ListNode* node1 = new ListNode(1);
 	ListNode* node2 = new ListNode(2);
@@ -35,7 +48,8 @@ int main(){
 	node2->next = node3;
 	node3->next = node4;
 	node4->next = node5;
-	cout << middleOfTheLinkedList(node1) << endl;
+	cout << middleOfTheLinkedListUsingHash(node1) << endl;
+	cout << middleOfTheLinkedListUsingTwoPointers(node1) << endl;
 	return EXIT_SUCCESS;
 
 }
