@@ -22,7 +22,7 @@ void printLinkedList(ListNode* head){
     cout << s << endl;
 }
 
-ListNode* reverseLinkedListNaive(ListNode* head){
+ListNode* reverseLinkedListIterative(ListNode* head){
     ListNode* currNode = head;
     ListNode* prevNode = NULL;
     while(currNode != NULL){
@@ -32,6 +32,26 @@ ListNode* reverseLinkedListNaive(ListNode* head){
         currNode = nextNode;
     }
     return prevNode;
+}
+
+// here reversedHead is a reference to a pointer to a ListNode Type
+void reverse(ListNode* p, ListNode* &reversedHead){
+    if(p->next == NULL){
+        reversedHead = p;
+        cout << "reversed head found" << endl;
+        return;
+    }
+    reverse(p->next, reversedHead);
+    ListNode* q = p->next;
+    q->next = p;
+    p->next = NULL;
+}
+
+ListNode* reverseLinkedListRecursive(ListNode* head){
+    ListNode* reversedHead = NULL;
+    // passing reversedHead as reference to recursive function to set Head
+    reverse(head,reversedHead);
+    return reversedHead;
 }
 int main(){
 	ListNode* node1 = new ListNode(1);
@@ -46,8 +66,13 @@ int main(){
 	node4->next = node5;
 	node5->next = node6;
     printLinkedList(node1);
-    ListNode* reversedHead = reverseLinkedListNaive(node1);
-    cout << "link list reversed" << endl;
+
+    ListNode* reversedHead = reverseLinkedListIterative(node1);
+    cout << "link list reversed iteratively" << endl;
+    printLinkedList(reversedHead);
+
+    reversedHead = reverseLinkedListRecursive(reversedHead);
+    cout << "link list reversed recursively" << endl;
     printLinkedList(reversedHead);
     return EXIT_SUCCESS;
 }
